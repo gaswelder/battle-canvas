@@ -46,7 +46,11 @@ export class Player extends Item {
     super.run(dt, t);
     if (this.keys[" "] && t >= this.nextShoot) {
       this.nextShoot = t + 1000 / shootsPerSecond;
-      return [new Bullet(this.pos.slice(), this.dir.slice())];
+      const bulletPos = [
+        this.pos[0] + this.size[0] / 2,
+        this.pos[1] + this.size[1] / 2
+      ];
+      return [new Bullet(bulletPos, this.dir.slice())];
     }
   }
 }
