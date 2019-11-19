@@ -2,9 +2,21 @@ const KMPH_TO_PXPMS = 0.001;
 
 export class Item {
   constructor(pos, size = [10, 10]) {
+    /**
+     * Where this item's top left corner is, [x, y].
+     */
     this.pos = pos;
+    /**
+     * The item's bounding rectangle size, [w, h].
+     */
     this.size = size;
+    /**
+     * The item's orientation. [1, 1] is north-east, [0, -1] is south.
+     */
     this.dir = [0, 0];
+    /**
+     * The item's velocity in "km/h"
+     */
     this.v = 0;
   }
 

@@ -1,6 +1,21 @@
 import { Bullet } from "./bullet";
 import { Item } from "./item";
 
+const speed = keys =>
+  keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight || keys.ArrowUp ? 60 : 0;
+
+const dir = (dir, keys) => {
+  if (speed(keys) == 0) {
+    return dir;
+  }
+  const result = [0, 0];
+  if (keys.ArrowDown) result[1] = -1;
+  if (keys.ArrowUp) result[1] = 1;
+  if (keys.ArrowLeft) result[0] = -1;
+  if (keys.ArrowRight) result[0] = 1;
+  return result;
+};
+
 export class Player extends Item {
   constructor() {
     super([400, 400], [16, 16]);
@@ -15,57 +30,23 @@ export class Player extends Item {
   }
 
   add(key) {
-    switch (key) {
-      case "ArrowUp":
-        this.dir[1] = 1;
-        break;
-      case "ArrowDown":
-        this.dir[1] = -1;
-        break;
-      case "ArrowLeft":
-        this.dir[0] = -1;
-        break;
-      case "ArrowRight":
-        this.dir[0] = 1;
-        break;
-      case " ":
-        this.shooting = true;
-        break;
-    }
-    if (this.dir[0] || this.dir[1]) {
-      this.v = 60;
-    } else {
-      this.v = 0;
-    }
+    this.keys[key] = true;
+    this.v = speed(this.keys);
+    this.dir = dir(this.dir, this.keys);
   }
 
   remove(key) {
-    switch (key) {
-      case "ArrowUp":
-      case "ArrowDown":
-        this.dir[1] = 0;
-        break;
-      case "ArrowLeft":
-      case "ArrowRight":
-        this.dir[0] = 0;
-        break;
-      case " ":
-        this.shooting = false;
-        break;
-    }
-    if (this.dir[0] || this.dir[1]) {
-      this.v = 60;
-    } else {
-      this.v = 0;
-    }
+    this.keys[key] = false;
+    this.v = speed(this.keys);
+    this.dir = dir(this.dir, this.keys);
   }
 
   run(dt, t) {
     const shootsPerSecond = 10;
     super.run(dt, t);
-    if (this.shooting && t >= this.nextShoot) {
+    if (this.keys[" "] && t >= this.nextShoot) {
       this.nextShoot = t + 1000 / shootsPerSecond;
-      return [new Bullet(this.pos.slice(), [1, 0])];
+      return [new Bullet(this.pos.slice(), this.dir.slice())];
     }
   }
 }
