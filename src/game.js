@@ -32,6 +32,41 @@ export class Game {
       return more;
     };
 
+    const WIDTH = 800;
+    const HEIGHT = 600;
+
+    const clip = () => {
+      for (const obj of this.objects) {
+        if (obj.pos[0] + obj.size[0] > WIDTH) {
+          obj.pos[0] = WIDTH - obj.size[0];
+          obj.hitWall();
+        }
+        if (obj.pos[0] < 0) {
+          obj.pos[0] = 0;
+          obj.hitWall();
+        }
+        if (obj.pos[1] + obj.size[1] > HEIGHT) {
+          obj.pos[1] = HEIGHT - obj.size[1];
+          obj.hitWall();
+        }
+        if (obj.pos[1] < 0) {
+          obj.pos[1] = 0;
+          obj.hitWall();
+        }
+      }
+    };
+
+    const gc = () => {
+      let n = this.objects.length;
+      for (let i = 0; i < n; i++) {
+        if (this.objects[i].health <= 0) {
+          this.objects.splice(i, 1);
+          i--;
+          n--;
+        }
+      }
+    };
+
     const run = () => {
       const t2 = Date.now();
       const dt = t2 - this.t;
@@ -40,25 +75,8 @@ export class Game {
       for (const n of newObjects) {
         this.objects.push(n);
       }
-
-      const WIDTH = 800;
-      const HEIGHT = 600;
-
-      for (const obj of this.objects) {
-        if (obj.pos[0] + obj.size[0] > WIDTH) {
-          obj.pos[0] = WIDTH - obj.size[0];
-        }
-        if (obj.pos[0] < 0) {
-          obj.pos[0] = 0;
-        }
-        if (obj.pos[1] + obj.size[1] > HEIGHT) {
-          obj.pos[1] = HEIGHT - obj.size[1];
-        }
-        if (obj.pos[1] < 0) {
-          obj.pos[1] = 0;
-        }
-      }
-
+      clip();
+      gc();
       this.t += dt;
     };
     run();

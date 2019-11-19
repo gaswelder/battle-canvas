@@ -6,4 +6,10 @@ export class Bullet extends Item {
     this.dir = dir;
     this.v = 300;
   }
+
+  hitWall() {
+    console.log("kaboom");
+    this.health = 0;
+    this.v = 0;
+  }
 }

@@ -18,12 +18,24 @@ export class Item {
      * The item's velocity in "km/h"
      */
     this.v = 0;
+    /**
+     * How many points should be deducted before this item is removed.
+     */
+    this.health = 1;
   }
 
   run(dt) {
     const v = this.v * KMPH_TO_PXPMS;
     this.pos[0] += this.dir[0] * v * dt;
     this.pos[1] += this.dir[1] * v * dt;
+  }
+
+  /**
+   * Method that is called when the item hits a wall.
+   * Does nothing by default.
+   */
+  hitWall() {
+    //
   }
 
   render(c) {
