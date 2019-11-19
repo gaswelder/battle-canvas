@@ -50,7 +50,7 @@ export class Player extends Item {
         this.pos[0] + this.size[0] / 2,
         this.pos[1] + this.size[1] / 2
       ];
-      return [new Bullet(bulletPos, this.dir.slice())];
+      return [new Bullet(bulletPos, this.dir.slice(), this)];
     }
   }
 }

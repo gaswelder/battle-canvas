@@ -1,5 +1,6 @@
 import { Item } from "./item";
 import { Player } from "./player";
+import { Bullet } from "./bullet";
 
 const RUN_FPS = 20;
 
@@ -67,6 +68,34 @@ export class Game {
       }
     };
 
+    const intersects = (obj1, obj2) =>
+      points(obj2).some(p => rectHas(obj1, p)) ||
+      points(obj1).some(p => rectHas(obj2, p));
+    const points = obj => [
+      [obj.pos[0], obj.pos[1]],
+      [obj.pos[0] + obj.size[0], obj.pos[1] + obj.size[1]],
+      [obj.pos[0] + obj.size[0], obj.pos[1]],
+      [obj.pos[0], obj.pos[1] + obj.size[1]]
+    ];
+    const rectHas = (obj, p) =>
+      p[0] >= obj.pos[0] &&
+      p[0] <= obj.pos[0] + obj.size[0] &&
+      p[1] >= obj.pos[1] &&
+      p[1] <= obj.pos[1] + obj.size[1];
+
+    const checkHits = () => {
+      const bullets = this.objects.filter(o => o instanceof Bullet);
+      const rest = this.objects.filter(o => !(o instanceof Bullet));
+
+      for (const obj of rest) {
+        for (const bul of bullets) {
+          if (intersects(obj, bul)) {
+            obj.punch(bul);
+          }
+        }
+      }
+    };
+
     const run = () => {
       const t2 = Date.now();
       const dt = t2 - this.t;
@@ -76,6 +105,7 @@ export class Game {
         this.objects.push(n);
       }
       clip();
+      checkHits();
       gc();
       this.t += dt;
     };

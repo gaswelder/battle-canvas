@@ -38,6 +38,17 @@ export class Item {
     //
   }
 
+  /**
+   * Called when the item is hit by something.
+   */
+  punch(item) {
+    if (item.creator && item.creator == this) {
+      return;
+    }
+    this.health -= item.v;
+    item.health = 0;
+  }
+
   render(c) {
     c.beginPath();
     c.strokeStyle = "1px solid red;";
