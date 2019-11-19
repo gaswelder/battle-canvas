@@ -11,9 +11,11 @@ game.start(oo => {
   objects = oo;
 });
 
-function render() {
-  const c = canvas.getContext("2d");
+const c = canvas.getContext("2d");
+c.translate(0, canvas.height);
+c.scale(1, -1);
 
+function render() {
   c.fillStyle = "#fff";
   c.beginPath();
   c.fillRect(0, 0, 800, 600);
