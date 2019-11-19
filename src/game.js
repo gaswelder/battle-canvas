@@ -18,10 +18,8 @@ export class Game {
 
   start(callback) {
     callback(this.objects);
-    const run = () => {
-      const t2 = Date.now();
-      const dt = t2 - this.t;
 
+    const move = (dt, t2) => {
       let more = [];
       for (const o of this.objects) {
         const newObjects = o.run(dt, t2);
@@ -31,8 +29,34 @@ export class Game {
           }
         }
       }
-      for (const n of more) {
+      return more;
+    };
+
+    const run = () => {
+      const t2 = Date.now();
+      const dt = t2 - this.t;
+
+      const newObjects = move(dt, t2);
+      for (const n of newObjects) {
         this.objects.push(n);
+      }
+
+      const WIDTH = 800;
+      const HEIGHT = 600;
+
+      for (const obj of this.objects) {
+        if (obj.pos[0] + obj.size[0] > WIDTH) {
+          obj.pos[0] = WIDTH - obj.size[0];
+        }
+        if (obj.pos[0] < 0) {
+          obj.pos[0] = 0;
+        }
+        if (obj.pos[1] + obj.size[1] > HEIGHT) {
+          obj.pos[1] = HEIGHT - obj.size[1];
+        }
+        if (obj.pos[1] < 0) {
+          obj.pos[1] = 0;
+        }
       }
 
       this.t += dt;
