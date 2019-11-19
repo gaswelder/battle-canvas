@@ -1,0 +1,14 @@
+{
+  "name": "ttt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "gasweld <gasweld@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "rollup": "^1.27.2",
+    "rollup-cli": "^1.0.9"
+  },
+  "scripts": {
+    "dev": "rollup -f iife -o build/bc.bin.js -i bc.js -w"
+  }
+}
