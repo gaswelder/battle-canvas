@@ -17,7 +17,7 @@
       ws.send(JSON.stringify({ action, pressed }))
     );
 
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket(`ws://${location.host}`);
     ws.addEventListener("message", function(e) {
       u.render(JSON.parse(e.data));
     });
