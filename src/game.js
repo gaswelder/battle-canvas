@@ -3,17 +3,38 @@ import { Player } from "./player";
 import { Bullet } from "./bullet";
 
 const RUN_FPS = 20;
+const WIDTH = 800;
+const HEIGHT = 600;
+
+const quant = (q, x) => Math.round(x / q) * q;
+
+const terrain = () => {
+  const objects = [];
+  const a = Math.random() * 0.02;
+  const b = Math.random() * 2;
+  const c = Math.random() * 200;
+  const d = Math.random() * 3000;
+  const e = Math.random() * 300;
+  const f = Math.random() * 30;
+  for (let i = 0; i < 100; i++) {
+    const x = quant(
+      20,
+      WIDTH * Math.sin(i * a) +
+        (WIDTH / 10) * Math.sin(i * b) +
+        (WIDTH / 100) * Math.sin(i * c)
+    );
+    const y = quant(
+      20,
+      (HEIGHT * (Math.sin(i * d) + Math.sin(i * e) + Math.sin(i * f) + 3)) / 6
+    );
+    objects.push(new Item([x, y], [20, 20]));
+  }
+  return objects;
+};
 
 export class Game {
   constructor() {
-    this.objects = [
-      new Item([0, 0]),
-      new Item([200, 100]),
-      new Item([100, 333]),
-      new Item([123, 352]),
-      new Item([400, 211]),
-      new Player()
-    ];
+    this.objects = [...terrain(), new Player()];
     this.t = Date.now();
   }
 
@@ -32,9 +53,6 @@ export class Game {
       }
       return more;
     };
-
-    const WIDTH = 800;
-    const HEIGHT = 600;
 
     const clip = () => {
       for (const obj of this.objects) {
