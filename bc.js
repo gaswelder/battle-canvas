@@ -19,10 +19,11 @@ function render(objects) {
   }
 }
 const game = new Game(render);
+game.addPlayer(1);
+game.addPlayer(2);
 game.start();
 
-// "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "
-function setControls(keys) {
+function setControls(playerId, keys) {
   const playerActions = [
     "ArrowUp",
     "ArrowDown",
@@ -35,17 +36,18 @@ function setControls(keys) {
   container.addEventListener("keydown", e => {
     const a = action(e);
     if (a) {
-      game.dispatchKey(a, true);
+      game.dispatchKey(playerId, a, true);
       e.preventDefault();
     }
   });
   container.addEventListener("keyup", e => {
     const a = action(e);
     if (a) {
-      game.dispatchKey(a, false);
+      game.dispatchKey(playerId, a, false);
       e.preventDefault();
     }
   });
 }
 
-setControls(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "]);
+setControls(1, ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "]);
+setControls(2, ["w", "s", "a", "d", "Enter"]);

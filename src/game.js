@@ -10,9 +10,17 @@ const RENDER_FPS = 20;
 
 export class Game {
   constructor(update) {
-    this.objects = [...terrain(WIDTH, HEIGHT), new Player()];
+    this.objects = terrain(WIDTH, HEIGHT);
     this.t = Date.now();
     this.update = update;
+  }
+
+  addPlayer(id) {
+    const pos = [
+      10 + (WIDTH - 20) * Math.random(),
+      10 + (HEIGHT - 20) * Math.random()
+    ];
+    this.objects.push(new Player(id, pos));
   }
 
   start() {
@@ -134,8 +142,11 @@ export class Game {
     setInterval(run, 1000 / RUN_FPS);
   }
 
-  dispatchKey(action, pressed) {
-    const player = this.objects.find(o => o instanceof Player);
+  dispatchKey(playerId, action, pressed) {
+    const player = this.objects.find(
+      o => o instanceof Player && o.id == playerId
+    );
+    if (!player) return;
     if (pressed) {
       player.add(action);
     } else {

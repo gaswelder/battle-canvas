@@ -21,8 +21,8 @@ const dir = (dir, keys) => {
 };
 
 export class Player extends Item {
-  constructor() {
-    super([400, 400], [16, 16]);
+  constructor(id, pos) {
+    super(pos, [16, 16]);
     this.keys = {
       ArrowUp: false,
       ArrowDown: false,
@@ -31,6 +31,7 @@ export class Player extends Item {
       " ": false
     };
     this.weapon = new Weapon(this);
+    this.id = id;
   }
 
   add(key) {
