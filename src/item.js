@@ -44,11 +44,4 @@ export class Item {
     this.health -= item.v;
     item.health = 0;
   }
-
-  render(c) {
-    c.beginPath();
-    c.strokeStyle = "1px solid red;";
-    c.rect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
-    c.stroke();
-  }
 }
