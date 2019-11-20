@@ -1,5 +1,5 @@
-import { Bullet } from "./bullet";
 import { Item } from "./item";
+import { Weapon } from "./weapon";
 
 const PLAYER_SPEED = 100;
 
@@ -30,7 +30,7 @@ export class Player extends Item {
       ArrowRight: false,
       " ": false
     };
-    this.nextShoot = Date.now();
+    this.weapon = new Weapon(this);
   }
 
   add(key) {
@@ -46,15 +46,13 @@ export class Player extends Item {
   }
 
   run(dt, t) {
-    const shootsPerSecond = 10;
     super.run(dt, t);
-    if (this.keys[" "] && t >= this.nextShoot) {
-      this.nextShoot = t + 1000 / shootsPerSecond;
-      const bulletPos = [
+    if (this.keys[" "]) {
+      const center = [
         this.pos[0] + this.size[0] / 2,
         this.pos[1] + this.size[1] / 2
       ];
-      return [new Bullet(bulletPos, this.dir.slice(), this)];
+      return this.weapon.run(t, center, this.dir);
     }
   }
 }
