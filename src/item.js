@@ -1,5 +1,3 @@
-const KMPH_TO_PXPMS = 0.001;
-
 export class Item {
   constructor(pos, size = [10, 10]) {
     /**
@@ -25,9 +23,7 @@ export class Item {
   }
 
   run(dt) {
-    const v = this.v * KMPH_TO_PXPMS;
-    this.pos[0] += this.dir[0] * v * dt;
-    this.pos[1] += this.dir[1] * v * dt;
+    //
   }
 
   /**
