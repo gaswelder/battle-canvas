@@ -134,17 +134,12 @@ export class Game {
     setInterval(run, 1000 / RUN_FPS);
   }
 
-  dispatchKey(key, pressed) {
-    const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "];
-    if (!keys.includes(key)) {
-      return false;
-    }
+  dispatchKey(action, pressed) {
     const player = this.objects.find(o => o instanceof Player);
     if (pressed) {
-      player.add(key);
+      player.add(action);
     } else {
-      player.remove(key);
+      player.remove(action);
     }
-    return true;
   }
 }

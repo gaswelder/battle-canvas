@@ -21,13 +21,31 @@ function render(objects) {
 const game = new Game(render);
 game.start();
 
-container.addEventListener("keydown", e => {
-  if (game.dispatchKey(e.key, true)) {
-    e.preventDefault();
-  }
-});
-container.addEventListener("keyup", e => {
-  if (game.dispatchKey(e.key, false)) {
-    e.preventDefault();
-  }
-});
+// "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "
+function setControls(keys) {
+  const playerActions = [
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    " "
+  ];
+  const action = event => playerActions[keys.indexOf(event.key)];
+
+  container.addEventListener("keydown", e => {
+    const a = action(e);
+    if (a) {
+      game.dispatchKey(a, true);
+      e.preventDefault();
+    }
+  });
+  container.addEventListener("keyup", e => {
+    const a = action(e);
+    if (a) {
+      game.dispatchKey(a, false);
+      e.preventDefault();
+    }
+  });
+}
+
+setControls(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "]);
