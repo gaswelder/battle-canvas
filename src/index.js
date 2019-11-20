@@ -29,6 +29,8 @@ function main() {
 
   const wss = new ws.Server({ server });
 
+  let id = 0;
+
   const sockets = [];
   function add(ws) {
     sockets.push({ ws });
@@ -41,8 +43,6 @@ function main() {
   const game = new Game(objects => {
     sockets.forEach(c => c.ws.send(JSON.stringify(objects)));
   });
-  game.addPlayer(1);
-  game.addPlayer(2);
   game.start();
 
   wss.on("connection", function connection(ws) {
@@ -50,17 +50,17 @@ function main() {
     ws.on("close", function() {
       remove(ws);
     });
-    processSocket(ws);
+    id++;
+    processSocket(ws, id);
   });
 
-  function processSocket(ws) {
-    let user;
-
+  function processSocket(ws, id) {
+    game.addPlayer(id);
     ws.on("message", function incoming(message) {
       const msg = JSON.parse(message);
-      console.log(user, "\t", msg);
+      process.stdout.write(`${id}\t${message}\n`);
       if (msg.action) {
-        game.dispatchKey(1, msg.action, msg.pressed);
+        game.dispatchKey(id, msg.action, msg.pressed);
       }
       // handlers[msg.type](msg.val);
     });
