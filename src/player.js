@@ -1,8 +1,12 @@
 import { Bullet } from "./bullet";
 import { Item } from "./item";
 
+const PLAYER_SPEED = 100;
+
 const speed = keys =>
-  keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight || keys.ArrowUp ? 60 : 0;
+  keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight || keys.ArrowUp
+    ? PLAYER_SPEED
+    : 0;
 
 const dir = (dir, keys) => {
   if (speed(keys) == 0) {
