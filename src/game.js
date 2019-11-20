@@ -6,15 +6,18 @@ const RUN_FPS = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 const KMPH_TO_PXPMS = 0.001;
+const RENDER_FPS = 20;
 
 export class Game {
-  constructor() {
+  constructor(update) {
     this.objects = [...terrain(WIDTH, HEIGHT), new Player()];
     this.t = Date.now();
+    this.update = update;
   }
 
-  start(callback) {
-    callback(this.objects);
+  start() {
+    this.update(this.objects);
+    setInterval(() => this.update(this.objects), 1000 / RENDER_FPS);
 
     const move = (dt, t2) => {
       let more = [];
