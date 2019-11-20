@@ -32,6 +32,7 @@ export class Player extends Item {
     };
     this.weapon = new Weapon(this);
     this.id = id;
+    this.type = "player";
   }
 
   add(key) {

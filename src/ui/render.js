@@ -1,5 +1,3 @@
-import { Wall } from "../game/wall";
-
 export function createRenderer(container) {
   container.innerHTML = '<canvas width="800" height="600" />';
   const canvas = document.querySelector("canvas");
@@ -25,19 +23,26 @@ export function createRenderer(container) {
   };
 
   function renderObject(c, object) {
-    if (object instanceof Wall) {
-      c.beginPath();
-      c.fillStyle = wallColor(object.health);
-      c.fillRect(object.pos[0], object.pos[1], object.size[0], object.size[1]);
-      c.rect(object.pos[0], object.pos[1], object.size[0], object.size[1]);
-      c.strokeStyle = "#eee";
-      c.stroke();
-      c.strokeStyle = "black";
-    } else {
-      c.beginPath();
-      // c.strokeStyle = "1px solid red;";
-      c.rect(object.pos[0], object.pos[1], object.size[0], object.size[1]);
-      c.stroke();
+    switch (object.type) {
+      case "wall":
+        c.beginPath();
+        c.fillStyle = wallColor(object.health);
+        c.fillRect(
+          object.pos[0],
+          object.pos[1],
+          object.size[0],
+          object.size[1]
+        );
+        c.rect(object.pos[0], object.pos[1], object.size[0], object.size[1]);
+        c.strokeStyle = "#eee";
+        c.stroke();
+        c.strokeStyle = "black";
+        break;
+      default:
+        c.beginPath();
+        // c.strokeStyle = "1px solid red;";
+        c.rect(object.pos[0], object.pos[1], object.size[0], object.size[1]);
+        c.stroke();
     }
   }
 
