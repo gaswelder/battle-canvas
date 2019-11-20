@@ -1,4 +1,4 @@
-import { Item } from "./item";
+import { Wall } from "./wall";
 import { Player } from "./player";
 import { Bullet } from "./bullet";
 
@@ -27,7 +27,7 @@ const terrain = () => {
       20,
       (HEIGHT * (Math.sin(i * d) + Math.sin(i * e) + Math.sin(i * f) + 3)) / 6
     );
-    objects.push(new Item([x, y], [20, 20]));
+    objects.push(new Wall([x, y], [20, 20]));
   }
   return objects;
 };
