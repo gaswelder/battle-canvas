@@ -30,8 +30,8 @@ export class Player extends Item {
       ArrowRight: false,
       " ": false
     };
-    this.weapon = new Weapon(this);
     this.id = id;
+    this.weapon = new Weapon(this.id);
     this.type = "player";
   }
 

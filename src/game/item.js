@@ -37,11 +37,11 @@ export class Item {
   /**
    * Called when the item is hit by something.
    */
-  punch(item) {
-    if (item.creator && item.creator == this) {
+  punch(bullet) {
+    if (bullet.ownerId && bullet.ownerId == this.id) {
       return;
     }
-    this.health -= item.v;
-    item.health = 0;
+    this.health -= bullet.v;
+    bullet.health = 0;
   }
 }

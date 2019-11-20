@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <title>BC</title>
+  <style>
+    div {
+      border: thin solid red;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <script src="ui.js"></script>
+  <script>
+    const u = ui.createUI(document.querySelector("div"));
+    u.onAction((action, pressed) =>
+      ws.send(JSON.stringify({ action, pressed }))
+    );
+
+    const ws = new WebSocket("ws://localhost:8080");
+    ws.addEventListener("message", function(e) {
+      u.render(JSON.parse(e.data));
+    });
+  </script>
+</body>

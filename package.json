@@ -1,14 +1,17 @@
 {
-  "name": "ttt",
+  "name": "battle-canvas",
   "version": "1.0.0",
   "main": "index.js",
   "author": "gasweld <gasweld@gmail.com>",
-  "license": "MIT",
+  "license": "GPLv3",
   "devDependencies": {
     "rollup": "^1.27.2",
     "rollup-cli": "^1.0.9"
   },
   "scripts": {
-    "dev": "rollup -f iife -o build/bc.bin.js -i bc.js -w"
+    "dev": "sh dev.sh"
+  },
+  "dependencies": {
+    "ws": "^7.2.0"
   }
 }
