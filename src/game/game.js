@@ -1,6 +1,7 @@
 import { Player } from "./player";
 import { Bullet } from "./bullet";
 import { terrain } from "./map";
+import { maze } from "./maze";
 
 const RUN_FPS = 20;
 const WIDTH = 800;
@@ -10,7 +11,8 @@ const RENDER_FPS = 20;
 
 export class Game {
   constructor(update) {
-    this.objects = terrain(WIDTH, HEIGHT);
+    this.objects = maze(WIDTH, HEIGHT);
+    //.concat(terrain(WIDTH, HEIGHT));
     this.t = Date.now();
     this.update = update;
   }

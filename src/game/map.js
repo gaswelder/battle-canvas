@@ -1,6 +1,5 @@
 import { Wall } from "./wall";
-
-const quant = (q, x) => Math.round(x / q) * q;
+import { quant } from "./lib";
 
 export const terrain = (width, height) => {
   const objects = [];
