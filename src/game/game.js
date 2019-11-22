@@ -2,11 +2,7 @@ import { terrain } from "./map";
 import { maze } from "./maze";
 import { Player } from "./player";
 import { World } from "./world";
-
-const RUN_FPS = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
-const RENDER_FPS = 20;
+import { WIDTH, HEIGHT, RENDER_FPS, RUN_FPS } from "./const";
 
 export class Game {
   constructor(update) {
