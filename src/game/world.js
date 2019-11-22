@@ -4,20 +4,23 @@ import { Wall } from "./wall";
 
 const KMPH_TO_PXPMS = 0.001;
 
-const intersects = (obj1, obj2) =>
-  points(obj2).some(p => rectHas(obj1, p)) ||
-  points(obj1).some(p => rectHas(obj2, p));
-const points = obj => [
-  [obj.pos[0], obj.pos[1]],
-  [obj.pos[0] + obj.size[0], obj.pos[1] + obj.size[1]],
-  [obj.pos[0] + obj.size[0], obj.pos[1]],
-  [obj.pos[0], obj.pos[1] + obj.size[1]]
-];
-const rectHas = (obj, p) =>
-  p[0] > obj.pos[0] &&
-  p[0] < obj.pos[0] + obj.size[0] &&
-  p[1] > obj.pos[1] &&
-  p[1] < obj.pos[1] + obj.size[1];
+function miss(obj1, obj2) {
+  const aLeft = obj1.pos[0];
+  const aRight = obj1.pos[0] + obj1.size[0];
+  const aBottom = obj1.pos[1];
+  const aTop = obj1.pos[1] + obj1.size[1];
+
+  const bLeft = obj2.pos[0];
+  const bRight = obj2.pos[0] + obj2.size[0];
+  const bBottom = obj2.pos[1];
+  const bTop = obj2.pos[1] + obj2.size[1];
+
+  return aRight < bLeft || aLeft > bRight || aTop < bBottom || aBottom > bTop;
+}
+
+function intersects(obj1, obj2) {
+  return !miss(obj1, obj2);
+}
 
 export class World {
   constructor(width, height, objects, t) {
