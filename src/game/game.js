@@ -2,6 +2,8 @@ import { Player } from "./player";
 import { Bullet } from "./bullet";
 import { terrain } from "./map";
 import { maze } from "./maze";
+import { Wall } from "./wall";
+import { Tree } from "./tree";
 
 const RUN_FPS = 20;
 const WIDTH = 800;
@@ -31,6 +33,7 @@ export class Game {
     const move = (dt, t2) => {
       let more = [];
       for (const o of this.objects) {
+        if (o instanceof Wall || o instanceof Tree) continue;
         const newObjects = o.run(dt, t2);
 
         const v = o.v * KMPH_TO_PXPMS;
@@ -48,6 +51,9 @@ export class Game {
 
     const clip = () => {
       for (const obj of this.objects) {
+        // No need to check static objects.
+        if (obj instanceof Wall || obj instanceof Tree) continue;
+
         if (obj.pos[0] + obj.size[0] > WIDTH) {
           obj.pos[0] = WIDTH - obj.size[0];
           obj.hitWall();
