@@ -38,6 +38,16 @@ export function createRenderer(container) {
         c.stroke();
         c.strokeStyle = "black";
         break;
+      case "tree":
+        c.beginPath();
+        c.fillStyle = "#090";
+        c.fillRect(
+          object.pos[0],
+          object.pos[1],
+          object.size[0],
+          object.size[1]
+        );
+        break;
       default:
         c.beginPath();
         // c.strokeStyle = "1px solid red;";

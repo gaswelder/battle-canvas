@@ -1,5 +1,5 @@
-import { Wall } from "./wall";
 import { quant } from "./lib";
+import { Tree } from "./tree";
 
 export const terrain = (width, height) => {
   const objects = [];
@@ -20,7 +20,7 @@ export const terrain = (width, height) => {
       20,
       (height * (Math.sin(i * d) + Math.sin(i * e) + Math.sin(i * f) + 3)) / 6
     );
-    objects.push(new Wall([x, y], [20, 20]));
+    objects.push(new Tree([x, y]));
   }
   return objects;
 };

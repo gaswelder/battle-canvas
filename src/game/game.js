@@ -11,8 +11,7 @@ const RENDER_FPS = 20;
 
 export class Game {
   constructor(update) {
-    this.objects = maze(WIDTH, HEIGHT);
-    //.concat(terrain(WIDTH, HEIGHT));
+    this.objects = maze(WIDTH, HEIGHT).concat(terrain(WIDTH, HEIGHT));
     this.t = Date.now();
     this.update = update;
   }
