@@ -1,5 +1,7 @@
+const WIDTH = 1100;
+const HEIGHT = 900;
 export function createRenderer(container) {
-  container.innerHTML = '<canvas width="800" height="600" />';
+  container.innerHTML = `<canvas width="${WIDTH}" height="${HEIGHT}" />`;
   const canvas = document.querySelector("canvas");
 
   const c = canvas.getContext("2d");
@@ -9,7 +11,7 @@ export function createRenderer(container) {
   function render(objects) {
     c.fillStyle = "#fff";
     c.beginPath();
-    c.fillRect(0, 0, 800, 600);
+    c.fillRect(0, 0, WIDTH, HEIGHT);
 
     for (const o of objects) {
       renderObject(c, o);

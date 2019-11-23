@@ -8,7 +8,10 @@ exports.createServer = function createServer(server) {
   const sockets = new Set();
 
   const game = new Game(objects => {
-    sockets.forEach(c => c.send(JSON.stringify(objects)));
+    const update = JSON.stringify(objects);
+    sockets.forEach(c => {
+      c.send(update);
+    });
   });
   game.start();
 

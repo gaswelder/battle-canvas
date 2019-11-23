@@ -17,14 +17,33 @@
   <div></div>
   <script src="ui.js"></script>
   <script>
-    const u = ui.createUI(document.querySelector("div"));
-    u.onAction((action, pressed) =>
-      ws.send(JSON.stringify({ action, pressed }))
-    );
+    function init(container) {
+      const main = document.createElement("div");
+      const metrics = document.createElement("div");
+      container.appendChild(main);
+      container.appendChild(metrics);
 
-    const ws = new WebSocket(`ws://${location.host}`);
-    ws.addEventListener("message", function(e) {
-      u.render(JSON.parse(e.data));
-    });
+      const u = ui.createUI(main);
+      u.onAction((action, pressed) =>
+        ws.send(JSON.stringify({ action, pressed }))
+      );
+
+      let t = Date.now();
+      let size = 0;
+
+      const ws = new WebSocket(`ws://${location.host}`);
+      ws.addEventListener("message", function(e) {
+        size += e.data.length;
+        let t2 = Date.now();
+        metrics.innerHTML = `${Math.round(1000 / (t2 - t))} FPS / ${(
+          Math.round((size / 1024 / 1024) * 100) / 100
+        ).toFixed(2)} MB`;
+        t = t2;
+
+        u.render(JSON.parse(e.data));
+      });
+    }
+
+    init(document.querySelector("div"));
   </script>
 </body>
