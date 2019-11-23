@@ -5,25 +5,17 @@ exports.createServer = function createServer(server) {
   const wss = new ws.Server({ server });
 
   let id = 0;
-
-  const sockets = [];
-  function add(ws) {
-    sockets.push({ ws });
-  }
-  function remove(ws) {
-    const pos = sockets.findIndex(s => s.ws == ws);
-    sockets.splice(pos, 1);
-  }
+  const sockets = new Set();
 
   const game = new Game(objects => {
-    sockets.forEach(c => c.ws.send(JSON.stringify(objects)));
+    sockets.forEach(c => c.send(JSON.stringify(objects)));
   });
   game.start();
 
   wss.on("connection", function connection(ws) {
-    add(ws);
+    sockets.add(ws);
     ws.on("close", function() {
-      remove(ws);
+      sockets.delete(ws);
     });
     id++;
     processSocket(ws, id);
