@@ -1,4 +1,4 @@
-import { Item } from "./item";
+import { Item } from "./world/item";
 
 export class Tree extends Item {
   constructor(pos, size = [10, 10]) {

@@ -1,4 +1,4 @@
-import { Item } from "./item";
+import { Item } from "./world/item";
 import { Weapon } from "./weapon";
 
 const PLAYER_SPEED = 100;

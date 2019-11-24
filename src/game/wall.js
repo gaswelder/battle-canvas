@@ -1,4 +1,4 @@
-import { Item } from "./item";
+import { Item } from "./world/item";
 
 export class Wall extends Item {
   constructor(pos, size) {

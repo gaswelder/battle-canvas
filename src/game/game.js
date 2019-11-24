@@ -1,7 +1,7 @@
 import { terrain } from "./map";
 import { maze } from "./maze";
 import { Player } from "./player";
-import { World } from "./world";
+import { World } from "./world/world";
 import { WIDTH, HEIGHT, RENDER_FPS, RUN_FPS } from "./const";
 
 export class Game {

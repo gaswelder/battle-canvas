@@ -1,6 +1,6 @@
-import { Bullet } from "./bullet";
-import { Tree } from "./tree";
-import { Wall } from "./wall";
+import { Bullet } from "../bullet";
+import { Tree } from "../tree";
+import { Wall } from "../wall";
 
 const KMPH_TO_PXPMS = 0.001;
 
