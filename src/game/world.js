@@ -34,6 +34,26 @@ export class World {
     this.objects.push(obj);
   }
 
+  /**
+   * Advances the state of the world by the given amount
+   * of time.
+   *
+   * @param {number} dt milliseconds
+   */
+  run(dt) {
+    const t = this.t + dt;
+
+    const newObjects = this.move(dt, t);
+    for (const n of newObjects) {
+      this.objects.push(n);
+    }
+    this.clip();
+    this.checkHits();
+    this.clipObjects(dt);
+    this.gc();
+    this.t = t;
+  }
+
   gc() {
     let n = this.objects.length;
     for (let i = 0; i < n; i++) {
@@ -99,20 +119,6 @@ export class World {
         }
       }
     }
-  }
-
-  run(t) {
-    const dt = t - this.t;
-
-    const newObjects = this.move(dt, t);
-    for (const n of newObjects) {
-      this.objects.push(n);
-    }
-    this.clip();
-    this.checkHits();
-    this.clipObjects(dt);
-    this.gc();
-    this.t = t;
   }
 
   move(dt, t2) {

@@ -26,7 +26,11 @@ export class Game {
   start() {
     this.update(this.world.objects);
     setInterval(() => this.update(this.world.objects), 1000 / RENDER_FPS);
-    setInterval(() => this.world.run(Date.now()), 1000 / RUN_FPS);
+
+    const dt = 1000 / RUN_FPS;
+    setInterval(() => {
+      this.world.run(dt);
+    }, dt);
   }
 
   dispatchKey(playerId, action, pressed) {
