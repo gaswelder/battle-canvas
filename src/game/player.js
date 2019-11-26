@@ -1,8 +1,6 @@
 import { Item } from "./world/item";
 import { Weapon } from "./weapon";
-import { Bullet } from "./bullet";
-
-const PLAYER_SPEED = 100;
+import { PLAYER_SPEED } from "./const";
 
 const speed = keys =>
   keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight || keys.ArrowUp
