@@ -1,4 +1,3 @@
-import { terrain } from "./map";
 import { maze } from "./maze";
 import { Player } from "./player";
 import { World } from "./world/world";
@@ -6,12 +5,7 @@ import { WIDTH, HEIGHT, RENDER_FPS, RUN_FPS } from "./const";
 
 export class Game {
   constructor(update) {
-    this.world = new World(
-      WIDTH,
-      HEIGHT,
-      maze(WIDTH, HEIGHT).concat(terrain(WIDTH, HEIGHT)),
-      Date.now()
-    );
+    this.world = new World(WIDTH, HEIGHT, maze(WIDTH, HEIGHT), Date.now());
     this.update = update;
   }
 
