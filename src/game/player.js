@@ -19,6 +19,8 @@ const dir = (dir, keys) => {
   return result;
 };
 
+const SPACE = " ";
+
 export class Player extends Item {
   constructor(id, pos) {
     super(pos, [16, 16]);
@@ -27,7 +29,7 @@ export class Player extends Item {
       ArrowDown: false,
       ArrowLeft: false,
       ArrowRight: false,
-      " ": false
+      [SPACE]: false
     };
     this.id = id;
     this.weapon = new Weapon(this.id);
@@ -35,12 +37,20 @@ export class Player extends Item {
   }
 
   add(key) {
+    if (key == SPACE) {
+      this.weapon.pullTrigger();
+      return;
+    }
     this.keys[key] = true;
     this.v = speed(this.keys);
     this.dir = dir(this.dir, this.keys);
   }
 
   remove(key) {
+    if (key == SPACE) {
+      this.weapon.releaseTrigger();
+      return;
+    }
     this.keys[key] = false;
     this.v = speed(this.keys);
     this.dir = dir(this.dir, this.keys);
@@ -48,12 +58,22 @@ export class Player extends Item {
 
   tick(t) {
     super.tick(t);
-    if (this.keys[" "]) {
-      const center = [
-        this.pos[0] + this.size[0] / 2,
-        this.pos[1] + this.size[1] / 2
-      ];
-      return this.weapon.run(t, center, this.dir);
+    const center = [
+      this.pos[0] + this.size[0] / 2,
+      this.pos[1] + this.size[1] / 2
+    ];
+    if (this.dir[0] > 0) {
+      center[0] += this.size[0];
     }
+    if (this.dir[0] < 0) {
+      center[0] -= this.size[0];
+    }
+    if (this.dir[1] > 0) {
+      center[1] += this.size[1];
+    }
+    if (this.dir[1] < 0) {
+      center[1] -= this.size[1];
+    }
+    return this.weapon.run(t, center, this.dir);
   }
 }

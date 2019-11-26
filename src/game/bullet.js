@@ -2,12 +2,13 @@ import { Item } from "./world/item";
 import { Player } from "./player";
 
 export class Bullet extends Item {
-  constructor(pos, dir, ownerId) {
+  constructor(pos, dir, ownerId, v, damage) {
     super(pos, [2, 2]);
     this.dir = dir;
-    this.v = 300;
     this.ownerId = ownerId;
     this.type = "bullet";
+    this.v = v;
+    this.damage = damage;
   }
 
   hitWall() {
@@ -19,7 +20,7 @@ export class Bullet extends Item {
     if (obj instanceof Player && obj.id == this.ownerId) {
       return;
     }
-    obj.health -= this.v;
+    obj.health -= this.damage;
     this.v = 0;
     this.health = 0;
   }
