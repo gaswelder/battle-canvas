@@ -22,7 +22,13 @@ export class Item {
     this.health = 1;
   }
 
-  run(dt) {
+  /**
+   * Called to get the object opportunity to do something
+   * specific, like spawning a new object.
+   *
+   * @param {number} t Current world time
+   */
+  tick(t) {
     //
   }
 

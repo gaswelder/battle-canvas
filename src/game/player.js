@@ -47,8 +47,8 @@ export class Player extends Item {
     this.dir = dir(this.dir, this.keys);
   }
 
-  run(dt, t) {
-    super.run(dt, t);
+  tick(t) {
+    super.tick(t);
     if (this.keys[" "]) {
       const center = [
         this.pos[0] + this.size[0] / 2,

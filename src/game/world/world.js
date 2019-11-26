@@ -43,10 +43,28 @@ export class World {
   run(dt) {
     const t = this.t + dt;
 
-    const newObjects = this.move(dt, t);
+    // Let each object tick.
+    const newObjects = [];
+    for (const o of this.objects) {
+      const more = o.tick(t);
+      if (more) {
+        for (const m of more) {
+          newObjects.push(m);
+        }
+      }
+    }
     for (const n of newObjects) {
       this.objects.push(n);
     }
+
+    // Move each object.
+    for (const o of this.objects) {
+      if (o instanceof Wall || o instanceof Tree) continue;
+      const v = o.v * KMPH_TO_PXPMS;
+      o.pos[0] += o.dir[0] * v * dt;
+      o.pos[1] += o.dir[1] * v * dt;
+    }
+
     this.clip();
     this.checkHits();
     this.clipObjects(dt);
@@ -119,24 +137,5 @@ export class World {
         }
       }
     }
-  }
-
-  move(dt, t2) {
-    let more = [];
-    for (const o of this.objects) {
-      if (o instanceof Wall || o instanceof Tree) continue;
-      const newObjects = o.run(dt, t2);
-
-      const v = o.v * KMPH_TO_PXPMS;
-      o.pos[0] += o.dir[0] * v * dt;
-      o.pos[1] += o.dir[1] * v * dt;
-
-      if (newObjects) {
-        for (const n of newObjects) {
-          more.push(n);
-        }
-      }
-    }
-    return more;
   }
 }
