@@ -41,13 +41,11 @@ export class Item {
   }
 
   /**
-   * Called when the item is hit by something.
+   * Called wnen this item hits another item.
+   *
+   * @param {Item} obj
    */
-  punch(bullet) {
-    if (bullet.ownerId && bullet.ownerId == this.id) {
-      return;
-    }
-    this.health -= bullet.v;
-    bullet.health = 0;
+  hit(obj) {
+    //
   }
 }

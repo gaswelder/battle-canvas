@@ -1,4 +1,3 @@
-import { Bullet } from "../bullet";
 import { Tree } from "../tree";
 import { Wall } from "../wall";
 
@@ -59,15 +58,22 @@ export class World {
 
     // Move each object.
     for (const o of this.objects) {
-      if (o instanceof Wall || o instanceof Tree) continue;
+      if (!o.v) continue;
       const v = o.v * KMPH_TO_PXPMS;
       o.pos[0] += o.dir[0] * v * dt;
       o.pos[1] += o.dir[1] * v * dt;
+
+      const hit = this.objects.find(o1 => o1 != o && intersects(o1, o));
+      if (hit) {
+        const v = o.v * KMPH_TO_PXPMS;
+        o.pos[0] -= o.dir[0] * v * dt;
+        o.pos[1] -= o.dir[1] * v * dt;
+        o.hit(hit);
+        hit.hit(o);
+      }
     }
 
     this.clip();
-    this.checkHits();
-    this.clipObjects(dt);
     this.gc();
     this.t = t;
   }
@@ -103,38 +109,6 @@ export class World {
       if (obj.pos[1] < 0) {
         obj.pos[1] = 0;
         obj.hitWall();
-      }
-    }
-  }
-
-  checkHits() {
-    const bullets = this.objects.filter(o => o instanceof Bullet);
-    const rest = this.objects.filter(o => !(o instanceof Bullet));
-
-    for (const obj of rest) {
-      for (const bul of bullets) {
-        if (intersects(obj, bul)) {
-          obj.punch(bul);
-        }
-      }
-    }
-  }
-
-  clipObjects(dt) {
-    const n = this.objects.length;
-    for (let i = 0; i < n; i++) {
-      const a = this.objects[i];
-      if (a instanceof Bullet) continue;
-      for (let j = i + 1; j < n; j++) {
-        const b = this.objects[j];
-        if (b instanceof Bullet) continue;
-        if (intersects(a, b)) {
-          // Cancel previous movement
-          a.pos[0] -= a.v * KMPH_TO_PXPMS * a.dir[0] * dt;
-          b.pos[0] -= b.v * KMPH_TO_PXPMS * b.dir[0] * dt;
-          a.pos[1] -= a.v * KMPH_TO_PXPMS * a.dir[1] * dt;
-          b.pos[1] -= b.v * KMPH_TO_PXPMS * b.dir[1] * dt;
-        }
       }
     }
   }

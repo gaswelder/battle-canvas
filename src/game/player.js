@@ -1,5 +1,6 @@
 import { Item } from "./world/item";
 import { Weapon } from "./weapon";
+import { Bullet } from "./bullet";
 
 const PLAYER_SPEED = 100;
 
