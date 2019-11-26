@@ -33,6 +33,12 @@ export class World {
     this.objects.push(obj);
   }
 
+  removeObject(id) {
+    const pos = this.objects.findIndex(o => o.id == id);
+    if (pos < 0) return;
+    this.objects.splice(pos, 1);
+  }
+
   /**
    * Advances the state of the world by the given amount
    * of time.

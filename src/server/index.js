@@ -17,10 +17,11 @@ exports.createServer = function createServer(server) {
 
   wss.on("connection", function connection(ws) {
     sockets.add(ws);
+    id++;
     ws.on("close", function() {
       sockets.delete(ws);
+      game.removePlayer(id);
     });
-    id++;
     processSocket(ws, id);
   });
 

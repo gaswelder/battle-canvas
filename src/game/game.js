@@ -17,6 +17,11 @@ export class Game {
     this.world.addObject(new Player(id, pos));
   }
 
+  removePlayer(id) {
+    console.log("player " + id + " disconnected");
+    this.world.removeObject(id);
+  }
+
   start() {
     this.update(this.world.objects);
     setInterval(() => this.update(this.world.objects), 1000 / RENDER_FPS);
