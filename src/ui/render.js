@@ -24,6 +24,40 @@ export function createRenderer(container) {
     return "brown";
   };
 
+  function renderPlayer(c, object) {
+    const [x, y] = object.pos;
+    const [w, h] = object.size;
+    const cx = x + w / 2;
+    const cy = y + h / 2;
+    const trackWidth = w / 3;
+    const barrelLength = w;
+
+    c.beginPath();
+    c.strokeStyle = "blue";
+    c.rect(x, y, w, h);
+
+    if (object.dir[0]) {
+      c.rect(x, y + h - trackWidth, w, trackWidth);
+      c.rect(x, y, w, trackWidth);
+      c.moveTo(cx, cy);
+      if (object.dir[0] > 0) {
+        c.lineTo(cx + barrelLength, cy);
+      } else {
+        c.lineTo(cx - barrelLength, cy);
+      }
+    } else {
+      c.rect(x, y, trackWidth, h);
+      c.rect(x + w - trackWidth, y, trackWidth, h);
+      c.moveTo(cx, cy);
+      if (object.dir[1] > 0) {
+        c.lineTo(cx, cy + barrelLength);
+      } else {
+        c.lineTo(cx, cy - barrelLength);
+      }
+    }
+    c.stroke();
+  }
+
   function renderObject(c, object) {
     switch (object.type) {
       case "wall":
@@ -49,6 +83,9 @@ export function createRenderer(container) {
           object.size[0],
           object.size[1]
         );
+        break;
+      case "player":
+        renderPlayer(c, object);
         break;
       default:
         c.beginPath();
