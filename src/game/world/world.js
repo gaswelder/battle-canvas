@@ -22,9 +22,9 @@ function intersects(obj1, obj2) {
 }
 
 export class World {
-  constructor(width, height, objects, t) {
+  constructor(width, height, objects) {
     this.objects = objects;
-    this.t = t;
+    this.t = 0;
     this.width = width;
     this.height = height;
   }

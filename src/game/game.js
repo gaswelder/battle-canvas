@@ -5,7 +5,7 @@ import { WIDTH, HEIGHT, RENDER_FPS, RUN_FPS } from "./const";
 
 export class Game {
   constructor(update) {
-    this.world = new World(WIDTH, HEIGHT, maze(WIDTH, HEIGHT), Date.now());
+    this.world = new World(WIDTH, HEIGHT, maze(WIDTH, HEIGHT));
     this.update = update;
   }
 
